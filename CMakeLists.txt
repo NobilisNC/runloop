@@ -3,6 +3,8 @@ cmake_minimum_required( VERSION 3.1.0 FATAL_ERROR )
 project( "runloop" VERSION 1.0.0 LANGUAGES CXX )
 message( "Copyright 2013-2018, Corvusoft Ltd, All Rights Reserved." )
 
+set(BUILD_TESTS OFF CACHE BOOL "Build tests")
+
 #
 # Dependencies
 #
@@ -59,10 +61,12 @@ set_target_properties( ${SHARED_LIBRARY_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_N
 set_target_properties( ${SHARED_LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR} )
 target_link_libraries( ${SHARED_LIBRARY_NAME} )
 
-enable_testing( )
-add_subdirectory( "${PROJECT_SOURCE_DIR}/test/unit" )
-add_subdirectory( "${PROJECT_SOURCE_DIR}/test/feature" )
-add_subdirectory( "${PROJECT_SOURCE_DIR}/test/integration" )
+if ( BUILD_TESTS )
+  enable_testing( )
+  add_subdirectory( "${PROJECT_SOURCE_DIR}/test/unit" )
+  add_subdirectory( "${PROJECT_SOURCE_DIR}/test/feature" )
+  add_subdirectory( "${PROJECT_SOURCE_DIR}/test/integration" )
+endif()
 
 #
 # Install
